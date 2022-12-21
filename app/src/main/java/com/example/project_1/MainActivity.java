@@ -20,6 +20,7 @@ import android.widget.Toast;
 
 import java.util.Calendar;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+    //3ldzzaa
     private TextView txtCity; // city corresponding to its code
     //result  information
     private TextView reslbl,resId,resfname,reslname,resbirthdate,resbirthcity,resGender,resFaculty,resDept,resGpa,reschlrshp,resinfo;

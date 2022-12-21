@@ -1,0 +1,13 @@
+<!-- custom spinner style -->
+
+<!--copied the same as simple_spinner_dropdown_item plus a text color and a background-->
+    <CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
+        android:id="@android:id/text1"
+        style="?android:attr/spinnerDropDownItemStyle"
+        android:textColor="@color/white"
+        android:background="#C50505"
+        android:singleLine="true"
+        android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+        android:ellipsize="marquee"
+       />

@@ -1,0 +1,761 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:background="@drawable/red"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".MainActivity"
+    android:orientation="vertical">
+<!--add scroll view to get everything in a single page-->
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+<!--added this linear layout to pack everything in one child for scroll view-->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+<!--logo-->
+            <ImageView
+                android:layout_width="336dp"
+                android:layout_height="156dp"
+                android:layout_gravity="center"
+                android:layout_marginLeft="20dp"
+                android:padding="10dp"
+                android:src="@drawable/logo2"
+                />
+<!--            Hline-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#23040F" />
+
+
+<!--            for the ID input,  (edit text)-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:fontFamily="sans-serif-condensed"
+                    android:padding="10dp"
+                    android:text="@string/txtId"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:layout_marginRight="5dp"
+                    android:textStyle="bold" />
+<!-- no more than 11 digits, only Integers -->
+                <EditText
+                    android:id="@+id/stdId"
+                    android:maxLength="11"
+                    android:inputType="number"
+                    android:text="@string/StdId"
+                    android:layout_margin="5dp"
+                    android:textAlignment="center"
+                    android:textSize="15sp"
+                    android:textColor="#ffff"
+                    android:backgroundTint="#fff"
+                    android:padding="10dp"
+                    android:textColorHint="#fff"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:hint="type here"/>
+            </LinearLayout>
+
+<!--           Hline-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#23040F" />
+
+
+<!-- for name input-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/StdNameLabel"
+                    android:textAlignment="center"
+                    android:padding="20dp"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:textSize="20sp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="#FFFFFF" />
+<!-- only alphabetic input is allowed-->
+<!--                First  NAME-->
+                <EditText
+                    android:id="@+id/FirstName"
+                    android:layout_width="139dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="10dip"
+                    android:layout_marginRight="10dip"
+                    android:backgroundTint="#FFF"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:hint="First name"
+                    android:text="@string/StdFname"
+                    android:textColor="#fff"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    android:textAlignment="center"
+                    android:textColorHint="#D5C4C4" />
+<!--               Last name-->
+                <EditText
+                    android:id="@+id/LastName"
+                    android:layout_width="170dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FFF"
+                    android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+                    android:hint="Last name"
+                    android:padding="5dp"
+                    android:layout_marginRight="5dp"
+                    android:textColor="#fff"
+                    android:textSize="15sp"
+                    android:text="@string/StdLname"
+                    android:textAlignment="center"
+                    android:textColorHint="#D5C4C4" />
+            </LinearLayout>
+<!--         Hline-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#23040F" />
+
+<!--            for birthdate input-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="15dip"
+                    android:fontFamily="sans-serif-condensed"
+                    android:padding="20dp"
+                    android:text="@string/BirthLbl"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+<!--used a button to display datepicker once clicked-->
+<!--                date picker will be programmed in the java file-->
+                <Button
+                    android:id="@+id/btnDatePckr"
+                    android:layout_gravity="center"
+                    android:layout_width="250dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#C50505"
+                    android:textColorHint="#EDE1E1"
+                    android:hint="Choose"
+                    android:padding="5dp"
+                    android:textSize="15sp"
+                    android:layout_marginLeft="5dp"
+                    android:textColor="@color/white"
+                    style="?android:datePickerStyle" />
+            </LinearLayout>
+
+<!--        Hline-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#23040F" />
+
+<!--            for birth place -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:padding="20dp"
+                    android:layout_marginRight="5dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/BirthPlcLbl"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"/>
+
+                <Spinner
+                    android:id="@+id/BirthSpinner"
+                    android:layout_width="185dp"
+                    android:layout_height="match_parent"
+                    android:layout_marginRight="2dp"
+                    android:backgroundTint="#fff"
+                    android:padding="5dp" />
+<!--display city name with the corresponding code selected from the spinner-->
+                <TextView
+                    android:id="@+id/TxtBirthCity"
+                    android:layout_width="84dp"
+                    android:layout_height="match_parent"
+                    android:hint="City name"
+                    android:textSize="14sp"
+                    android:text="@string/txtCity"
+                    android:textAlignment="center"
+                    android:padding="10dp"
+                    android:textColor="#fff"
+                    android:textColorHint="#fff" />
+            </LinearLayout>
+<!--            Hline-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#23040F" />
+<!--            Gender input (radio buttons) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="10dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:padding="20dp"
+                    android:text="@string/GenderLabel"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <RadioGroup
+                    android:id="@+id/rdGroup1"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <RadioButton
+                        android:id="@+id/rdMale"
+                        android:layout_width="133dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginRight="10dp"
+                        android:buttonTint="#fff"
+                        android:padding="5dp"
+                        android:textSize="15sp"
+                        android:text="@string/rdMale"
+                        android:textColor="#D5C4C4" />
+
+                    <RadioButton
+                        android:id="@+id/rdFemale"
+                        android:layout_width="153dp"
+                        android:layout_height="wrap_content"
+                        android:buttonTint="#fff"
+                        android:padding="5dp"
+                        android:textSize="15sp"
+                        android:text="@string/rdFemale"
+                        android:textColor="#D5C4C4" />
+                </RadioGroup>
+            </LinearLayout>
+
+<!--            Hline-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#23040F" />
+
+<!--            for Faculty input-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:text="@string/Facultlbl"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:padding="20dp"
+                    android:textSize="20sp" />
+
+                <Spinner
+                    android:id="@+id/FacultySpinner"
+                    android:backgroundTint="#fff"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent" />
+            </LinearLayout>
+
+<!--Hline-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#23040F" />
+
+<!--            for Dept input-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textStyle="bold"
+                    android:fontFamily="sans-serif-condensed"
+                    android:padding="20dp"
+                    android:text="@string/Deptlbl"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp" />
+                <Spinner
+                    android:id="@+id/DeptSpinner"
+                    android:layout_width="match_parent"
+                    android:backgroundTint="#fff"
+                    android:layout_height="match_parent"
+                    />
+            </LinearLayout>
+
+<!--            Hline-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#23040F" />
+<!--          GPA input-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="40dp"
+                    android:fontFamily="sans-serif-condensed"
+                    android:padding="20dp"
+                    android:text="@string/Gpa"
+                    android:textAlignment="center"
+                    android:textColor="#FFFFFF"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+<!--               allow only 3 digits number (4 to include the decimal but it will be coded in java
+                    TO HOLD ONLY 3 DIGITS EXLUDING THE DOT-->
+                <EditText
+                    android:id="@+id/gpa"
+                    android:layout_width="169dp"
+                    android:layout_height="wrap_content"
+                    android:hint="type here ..."
+                    android:textColor="#fff"
+                    android:backgroundTint="#fff"
+                    android:textColorHint="#D5C4C4"
+                    android:textSize="15sp"
+                    android:padding="20dp"
+                    android:layout_marginLeft="5dp"
+                    android:inputType="numberDecimal"
+                    android:maxLength="4"
+                    android:text="@string/gpa" />
+            </LinearLayout>
+
+<!--            Hline-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#23040F" />
+
+<!--        SCHOLARSHIP INPUT-->
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:fontFamily="sans-serif-condensed"
+                android:padding="20dp"
+                android:text="@string/SchlshpLabel"
+                android:textAlignment="center"
+                android:textColor="#FFFFFF"
+                android:textSize="20sp"
+                android:textStyle="bold" />
+<!--            (radio buttons )  -->
+            <RadioGroup
+                android:id="@+id/rdGroup2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal">
+
+                <RadioButton
+                    android:id="@+id/rdFull"
+                    android:layout_width="125dp"
+                    android:layout_height="wrap_content"
+                    android:buttonTint="#fff"
+                    android:padding="20dp"
+                    android:text="@string/rdFull"
+                    android:textColor="#D5C4C4"
+                    android:textSize="15sp"
+                    android:layout_marginRight="3dp"/>
+                <RadioButton
+                    android:id="@+id/rdHalf"
+                    android:layout_width="147dp"
+                    android:buttonTint="#fff"
+                    android:textColor="#D5C4C4"
+                    android:padding="20dp"
+                    android:textSize="15sp"
+                    android:layout_marginRight="3dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rdHalf" />
+                <RadioButton
+                    android:id="@+id/rdNone"
+                    android:layout_width="111dp"
+                    android:textColor="#D5C4C4"
+                    android:buttonTint="#fff"
+                    android:padding="20dp"
+                    android:textSize="15sp"
+                    android:layout_marginRight="3dp"
+                    android:layout_height="wrap_content"
+                    android:text="@string/rdNone"/>
+            </RadioGroup>
+
+<!--            Hline-->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#23040F" />
+
+<!--            CHECK BOX FOR EXTRA INFORMATION INPUT CONFIRMATION-->
+            <CheckBox
+                android:id="@+id/info"
+                android:buttonTint="#fff"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:fontFamily="sans-serif-condensed"
+                android:textSize="15dp"
+                android:layout_margin="5dp"
+                android:padding="20dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/info"/>
+
+<!--set it to invisible and make it visible only when user checks the box-->
+            <EditText
+                android:id="@+id/extInfo"
+                android:layout_width="match_parent"
+                android:layout_height="160dp"
+                android:backgroundTint="#fff"
+                android:padding="50dp"
+                android:textSize="15sp"
+                android:hint="Write here"
+                android:layout_margin="5dp"
+                android:textColor="#fff"
+                android:text="@string/extraInfo"
+                android:textColorHint="#D5C4C4"
+                android:visibility="invisible" />
+
+
+<!--     Hline -->
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="4dp"
+                android:background="#23040F" />
+
+<!--************************************************************************************************-->
+<!--                                            SUBMITTED INFORMATION-->
+<!--   *******************************************************************************************-->
+            <TextView
+                android:id="@+id/reslbl"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:padding="20dp"
+                android:fontFamily="sans-serif-condensed"
+                android:text="Submitted Information:"
+                android:layout_marginBottom="5dp"
+                android:textAlignment="center"
+                android:textColor="#fff"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:visibility="invisible" />
+            <!--Layout to hold the submitted Information (to change background )-->
+            <LinearLayout
+                android:id="@+id/result"
+                android:layout_width="match_parent"
+                android:layout_height="474dp"
+                android:layout_marginTop="5dp"
+                android:background="#3C3838"
+                android:orientation="vertical"
+                android:padding="5dp"
+                android:visibility="invisible">
+                <!--FOR EACH INPUT WE ADDED 2 TEXTVIEWS NEXT TO EACH OTHERS SO WE CAN HAVE ONE WITH BOLD AND
+                ITALIC TEXT AND ONE WITH A DIFFRENT COLOR-->
+
+                <!--for Id -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+                    <!--                    text in bold and italic-->
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="ID: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold|italic" />
+                    <!--                        text in diffrent color-->
+                    <TextView
+                        android:id="@+id/resId"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFE500" />
+                </LinearLayout>
+
+                <!-- for First Name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="First Name: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/resFname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFEB3B" />
+                </LinearLayout>
+
+
+                <!-- for  Last Name -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="Last Name: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/resLname"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFEB3B" />
+                </LinearLayout>
+
+                <!--    Birth Date    -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="Birth Date: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/resBirthDate"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFEB3B" />
+                </LinearLayout>
+                <!--                BIRTH CITY-->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="Birth Place: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/resBirthPlace"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFEB3B" />
+                </LinearLayout>
+
+                <!--     Gender    -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="Gender: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/resGender"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFEB3B" />
+                </LinearLayout>
+
+                <!--      Faculty      -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="Faculty: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/resFaculty"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFEB3B" />
+                </LinearLayout>
+
+                <!--  Department  -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="Department: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/resDept"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFEB3B" />
+                </LinearLayout>
+
+                <!-- GPA -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="GPA: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/resGpa"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFEB3B" />
+                </LinearLayout>
+
+                <!--    ScholarShip    -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="ScholarShip: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/rescholar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFEB3B" />
+                </LinearLayout>
+                <!--                ADDITIONAL INFO -->
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="63dp"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:padding="10dp"
+                        android:text="Additional info: "
+                        android:textColor="@color/white"
+                        android:textStyle="bold|italic" />
+
+                    <TextView
+                        android:id="@+id/resinfo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="#FFEB3B" />
+                </LinearLayout>
+            </LinearLayout>
+<!--*******************************************************************************************
+                                      BUTTONS SECTION
+    *******************************************************************************************-->
+<!--        HORIZNTAL LAYOUT-->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp">
+<!--                reset button-->
+                <Button
+                    android:id="@+id/btnReset"
+                    android:layout_width="136dp"
+                    android:padding="15dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginRight="5sp"
+                    android:backgroundTint="#FFEB3B"
+                    android:text="@string/btnRst"
+                    android:textSize="15sp"
+                    android:textColor="#000000" />
+<!--                submit button    -->
+                <Button
+                    android:id="@+id/btnSubmit"
+                    android:layout_width="106dp"
+                    android:padding="15dp"
+                    android:textSize="15sp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginRight="5sp"
+                    android:backgroundTint="#4CAF50"
+                    android:text="@string/btnSbmt" />
+<!--                exit button-->
+                <Button
+                    android:id="@+id/btnExit"
+                    android:layout_width="171dp"
+                    android:textSize="15sp"
+                    android:padding="15dp"
+                    android:layout_marginLeft="2dp"
+                    android:layout_height="wrap_content"
+                    android:backgroundTint="#FF3D00"
+                    android:text="@string/btnExt" />
+            </LinearLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>

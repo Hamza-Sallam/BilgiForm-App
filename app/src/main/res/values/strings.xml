@@ -1,0 +1,34 @@
+<resources>
+    <string name="app_name">Bilgi University</string>
+    <string name="txtId">Enter your ID:</string>
+    <string name="StdId"></string>
+    <string name="StdNameLabel">Name: </string>
+    <string name="StdFname"></string>
+    <string name="StdLname"></string>
+    <string name="gpa"></string>
+    <string name="info">Additional Info ?</string>
+    <string name="GenderLabel">Gender: </string>
+    <string name="SchlshpLabel">Choose your Scholarship:</string>
+    <string name="BirthLbl">Birth Date: </string>
+
+    <string name="rdMale">Male</string>
+    <string name="rdFemale">Female</string>
+    <string name="rdFull">Full</string>
+    <string name="rdHalf">Half</string>
+    <string name="rdNone">None</string>
+
+    <string name="Gpa">GPA: </string>
+    <string name="txtCity"></string>
+    <string name="Facultlbl"> Faculty: </string>
+    <string name="Deptlbl">Department: </string>
+    <string name="BirthPlcLbl">Birth Place: </string>
+
+    <string name="btnRst">Reset</string>
+    <string name="btnSbmt">Submit</string>
+    <string name="btnExt">Exit</string>
+    <string name="extraInfo"></string>
+<string name="extinfolbl"></string>
+
+
+
+</resources>

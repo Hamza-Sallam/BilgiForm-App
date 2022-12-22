@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:background="#2196F3"
+    android:padding="5dp"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:src="@drawable/update"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="update first Name:"
+            android:textColor="#fff"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/Updatefirstname"
+            android:layout_width="214dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:hint="Enter...."
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="update last name:"
+            android:textColor="#fff"
+            android:textSize="15sp" />
+
+        <EditText
+            android:id="@+id/Updatelastname"
+            android:layout_width="279dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:digits="abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ"
+            android:hint="Enter...."
+            android:inputType="text"
+            android:textColor="@color/white"
+            android:textColorHint="@color/white" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="update Faculty"
+            android:textColor="#fff"
+            android:textSize="15sp" />
+
+        <Spinner
+            android:id="@+id/UpFacultySpinner"
+            android:backgroundTint="#fff"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content" />
+
+
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="update Department"
+            android:textColor="#fff"
+            android:textSize="15sp" />
+
+        <Spinner
+            android:id="@+id/UpDeptSpinner"
+            android:layout_width="269dp"
+            android:layout_height="wrap_content"
+            android:backgroundTint="#fff" />
+
+
+    </LinearLayout>
+    <Button
+        android:id="@+id/btnUpdateDialog"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:backgroundTint="#3F51B5"
+        android:text="Submit"
+        android:fontFamily="sans-serif-smallcaps"/>
+</LinearLayout>

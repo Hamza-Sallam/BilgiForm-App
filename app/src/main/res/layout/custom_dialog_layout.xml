@@ -32,8 +32,8 @@
             android:layout_height="wrap_content"
             android:backgroundTint="#fff"
             android:hint="Enter.... "
-            android:maxLength="11"
             android:inputType="number"
+            android:maxLength="11"
             android:textColor="#fff"
             android:textColorHint="#fff" />
     </LinearLayout>

@@ -32,24 +32,22 @@ import java.io.File;
 import java.util.ArrayList;
 import java.util.Calendar;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
-    SQLiteDatabase db =null;
-    String path;
+    SQLiteDatabase db =null; // database instance
+    String path; //database location
     Context activityContext;
     private TextView txtCity; // city corresponding to its code
     //result  information
-    private TextView resscl1,resG;
+    private TextView resscl1,resG; //hidden but used to retrieve info
     private EditText stdId,stdFname,stdLname,stdGpa,extraInfo;  //user inputs
     private CheckBox info;
-    //The Submitted Information
-    private LinearLayout result;
     //RadioButtons for the Gender and Scholarship
     private RadioButton rdMale, rdFemale, rdFull, rdHalf, rdNone;
-    //3 buttons with 1 button for date-picker
+    //8 buttons with 1 button for date-picker
     private Button btnSubmit, btnReset, btnExit, btnDate,btnDisplay,btnSearch,btnUpdate,btnDelete;
     //We have 3 Spinners , 1)For the  city code , 2)For the  Faculties , 3) For the Departments
     private DatePickerDialog datePickerDialog; //Date-Picker dialog that pops when user click on the btnDate button
     private Spinner BirthSpinner,FacultySpinner,DeptSpinner;
-    private ListView listView;
+    private ListView listView; //listview to hold records
     //For City Codes
     Integer birthplace[] = {0,966,20,962,90,212,416,04,86};
     //For Faculties and its corresponding departments
@@ -120,8 +118,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                 //set the text to city  of the selected corresponding code
-                txtCity.setText(matching_cities(birthplace[i]));
-            }
+                txtCity.setText(matching_cities(birthplace[i]));}
             @Override
             public void onNothingSelected(AdapterView<?> adapterView){/* required for interface*/}
         });//// end of setOnItemSelectedListener of city code spinner
@@ -131,30 +128,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             @Override
             public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
                //default
-                if(i == 0){
-                    DeptSpinner.setAdapter(adapter0);
-                }
+                if(i == 0){DeptSpinner.setAdapter(adapter0);}
                 //if engineer faculty is selected, set ENG departments for the spinner
-                else if(i == 1){
-                    DeptSpinner.setAdapter(adapter2);
-                }
+                else if(i == 1){DeptSpinner.setAdapter(adapter2);}
                 //if business faculty is selected, set BUS departments for the spinner
-                else if(i == 2){
-                    DeptSpinner.setAdapter(adapter4);
-                }
+                else if(i == 2){DeptSpinner.setAdapter(adapter4);}
                 //if architecture faculty is selected, set ARCH departments for the spinner
-                else if(i == 3){
-                    DeptSpinner.setAdapter(adapter3);
-                }
+                else if(i == 3){DeptSpinner.setAdapter(adapter3);}
                 //if Communication faculty is selected, set Comm departments for the spinner
-                else if(i == 4){
-                    DeptSpinner.setAdapter(adapter5);
-                }
-
-            }
-            @Override
+                else if(i == 4){DeptSpinner.setAdapter(adapter5);}
+            } @Override
             public void onNothingSelected(AdapterView<?> adapterView){ /*required for the interface*/}
         }); // end of setOnItemSelectedListener of faculty spinner
+
 
 
         //set  click listeners for buttons and checkbox
@@ -168,15 +154,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDelete.setOnClickListener(this);
         info.setOnClickListener(this);
 
+        //***********************       DATABASE  CREATION SECTION    ******************************************
         File myDbPath = getApplication().getFilesDir();
         path = myDbPath +"/"+"project22";
-        //***********************   DATABASE SECTION        ******************************************
         //create database
         try {
             if(!databaseExist()){
                 // we dont have data base
                 db =SQLiteDatabase.openDatabase(path,null,SQLiteDatabase.CREATE_IF_NECESSARY);
-                //CREATE A TABLE
+                //CREATE A STUDENT TABLE
                 String mytable ="create table student (id bigint primary key , firstname text,lastname text,"
                         +"birthdate date,birthplace text,gender text,faculty text,department text,gpa float,scholarship text,additionalInfo text);";
                 //execute the sql statement
@@ -184,19 +170,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 showCustomToast("table is created");
             }
         }
-        catch(SQLException e){
-            showCustomToast(e.getMessage());
-        }
+        catch(SQLException e){showCustomToast(e.getMessage());}
     }//end of OnCreate
 
+
+    //******************************************************* OPTION MENU SETUP *************************************************************
     // set the option menu for the current activity
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-// only one Option-Menu per Activity
-        populateMyFirstMenu(menu);
+        PopulateMenu(menu);
         return true;
     }
-    private void populateMyFirstMenu(Menu menu){
+    private void PopulateMenu(Menu menu){
         int groupId = 0;
 //arguments: groupId, optionId, order, title
         menu.add(groupId, 1, 1, "Submit");
@@ -208,13 +193,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         menu.add(groupId, 7, 7, "Exit");
         menu.add(groupId, 8, 6, "Help");
     } //populateMyFirstMenu
-    // called whenever an item in your options menu is selected
+    // called whenever an item in options menu is selected
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        return applyMenuOption( item );
-
-    }
-
+    public boolean onOptionsItemSelected(MenuItem item) { return applyMenuOption( item ); }
+// apply functionality to menu options
     private boolean applyMenuOption(MenuItem item) {
         int menuItemId = item.getItemId(); //1, 2, 3, ...8
         if (menuItemId == 1) {SubmitData();}
@@ -226,136 +208,44 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(menuItemId== 7){System.exit(0); finish();}
         return false;
     }
-    //helper method
+    //helper method to check if database exists
     private boolean databaseExist(){
         File dbFile = new File(path);
         return dbFile.exists();
     }
+//    **************************************    END OF OPTION MENU SETUP *******************************************************
+
+
     //******************************************************************************************
     //                                   ON CLICK METHOD
     //******************************************************************************************
     @Override
     public void onClick(View v){
-
         // when user click the submit button
-        if(v.getId() == btnSubmit.getId()){
-           SubmitData();
-        }
-        //when user click on reset button
-        if (v.getId() == btnReset.getId()) {
-            reset(); // call reset method
-        }
+        if(v.getId() == btnSubmit.getId()){SubmitData();}//submit button
+        if (v.getId() == btnReset.getId()) {reset();}// reset button
+        if(v.getId() == btnDisplay.getId()){DisplayData();}//display button
+        if(v.getId() == btnDelete.getId()){DeleteStdDialog();}//delete button
+        if(v.getId() == btnSearch.getId()){SearchStdDialog();}//search button
+        if(v.getId() == btnUpdate.getId()){UpdateStd();}//update button
+        // if user click on birthdate button, display a date picker
+        if (v.getId() == btnDate.getId()){datePickerDialog.show();}
+        // display the textbox if user wants to add extra information
+        if(info.isChecked()){extraInfo.setVisibility(View.VISIBLE);}
         //when user click on exit button
         if(v.getId() == btnExit.getId()){//To make the button Exit work when we click on it.
-           //exit the app
+            //exit the app
             finish();
             System.exit(0);;
-        }
-
-        if(v.getId() == btnDisplay.getId()){
-            DisplayData();
-        }
-        if(v.getId() == btnDelete.getId()){
-            DeleteStdDialog();
-        }
-        if(v.getId() == btnSearch.getId()){
-            SearchStdDialog();}
-        if(v.getId() == btnUpdate.getId()){
-            UpdateStd();}
-
-        // if user click on birthdate button, display a date picker
-        if (v.getId() == btnDate.getId()){
-            datePickerDialog.show();
-        }
-
-        // display the textbox if user wants to add extra information
-        if(info.isChecked()){
-            extraInfo.setVisibility(View.VISIBLE);
         }
         // if user checked it but changed his mind and unchecked it, make it invisible again and reset the text
         else if(!info.isChecked()){
             extraInfo.setVisibility(View.INVISIBLE);
             extraInfo.setText("");
         }
-
-
     }//end of OnClick
 
     //*****************************************************************************************************
-
-
-
-
-    //Method to Reset all values to default
-    public void reset(){
-        stdId.setText("");
-        stdFname.setText("");
-        stdLname.setText("");
-        btnDate.setText("");
-        txtCity.setText("");
-        rdMale.setChecked(false);
-        rdFemale.setChecked(false);
-        rdFull.setChecked(false);
-        rdHalf.setChecked(false);
-        rdNone.setChecked(false);
-        stdGpa.setText("");
-        BirthSpinner.setSelection(0);
-        FacultySpinner.setSelection(0);
-        DeptSpinner.setSelection(0);
-        extraInfo.setText("");
-        info.setChecked(false);
-        extraInfo.setVisibility(View.INVISIBLE);
-    }// end of reset
-
-
-public void SubmitData(){
-    //  CHECK VALID DATA FIRST BEFORE SUBMITTING INFO
-    // 1) ID must be exactly 11 digits
-    // 2) if all edit texts is not empty(length is not 0) means that the user wrote in it
-    // 3) use || 'OR' operator for radio buttons to make sure if one of them is checked
-    // 4) checking for non selected spinners if the first selection is selected 'default'
-    // 5) checking if the gpa is 4 digits but the 2nd position is a dot '.' not a number so it can be only 3 digits gpa
-    // 6) if the check box is checked but user wrote info in edit text
-    // 7) CITY CODE IS SELECTED AND NOT LEFT IN DEFAULT POSITION
-    if(stdId.getText().toString().length()==11 && stdFname.getText().length()!=0 && stdLname.getText().length()!=0&&
-            btnDate.getText().length()!=0 &&txtCity.getText().length()!=0 && (rdMale.isChecked() ||
-            rdFemale.isChecked()) &&  FacultySpinner.getSelectedItemPosition()!=0 && DeptSpinner.getSelectedItemPosition()!=0 &&
-            (stdGpa.getText().length()==4 && stdGpa.getText().charAt(1)=='.') && (rdFull.isChecked() || rdNone.isChecked() || rdHalf.isChecked())&&
-            ( (info.isChecked() && extraInfo.getText().length()!=0) || (!info.isChecked()))){
-    try {
-        db=SQLiteDatabase.openDatabase(path,null,SQLiteDatabase.CREATE_IF_NECESSARY);
-            //insert data
-            long id = Long.parseLong(stdId.getText().toString());
-            String FName = stdFname.getText().toString();
-            String Lname = stdLname.getText().toString();
-            String BirthD = btnDate.getText().toString();
-            String birthP = txtCity.getText().toString();
-        if(rdMale.isChecked()){ resG.setText("male");}
-        if(rdFemale.isChecked()){ resG.setText("female");}
-            String Gend =resG.getText().toString();
-            String Fac = FacultySpinner.getSelectedItem().toString();
-            String Dep = DeptSpinner.getSelectedItem().toString();
-            float gpa = Float.parseFloat(stdGpa.getText().toString());
-        if(rdFull.isChecked()){resscl1.setText("Full");}
-        if(rdHalf.isChecked()){resscl1.setText("Half");}
-        if(rdNone.isChecked()){resscl1.setText("None");}
-            String sclshp = resscl1.getText().toString();
-            String addinfo = extraInfo.getText().toString();
-            String insert = "insert into student values("+id+",'"+FName+"','"+Lname+"','"+BirthD+"','"+birthP+"','"
-                    +Gend+"','"+Fac+"','"+Dep+"',"+gpa+",'"+sclshp+"','"+addinfo+"');";
-            db.execSQL(insert);
-            showCustomToast("data inserted");
-            db.close();
-            reset();
-        }
-
-
-    catch(SQLException e){
-        showCustomToast(e.getMessage());
-    }}
-    //IF DATA IS NOT VALID DISPLAY TOAST MESSAGE TO ASK TO INPUT DATA CORRECTLY
-    else{showCustomToast("Invalid input Data\nplease try again");}
-}
 
 
     //Matching algorithm for the city codes
@@ -376,7 +266,84 @@ public void SubmitData(){
         return city;
 
     }//end of method
- private void DisplayData(){
+
+ //************************************************************************************************************************
+//*************************************   BUTTON HANDLING FUNCTIONS *********************************************************
+//*****************************************************************************************************************************
+
+    //*********************************     RESET STUDENT INFO    ****************************************************************
+    //Method to Reset all values to default
+    public void reset(){
+        stdId.setText("");
+        stdFname.setText("");
+        stdLname.setText("");
+        btnDate.setText("");
+        txtCity.setText("");
+        rdMale.setChecked(false);
+        rdFemale.setChecked(false);
+        rdFull.setChecked(false);
+        rdHalf.setChecked(false);
+        rdNone.setChecked(false);
+        stdGpa.setText("");
+        BirthSpinner.setSelection(0);
+        FacultySpinner.setSelection(0);
+        DeptSpinner.setSelection(0);
+        extraInfo.setText("");
+        info.setChecked(false);
+        extraInfo.setVisibility(View.INVISIBLE);
+    }// end of reset
+    //************************************      SUBMIT STUDENT INFO TO DATABASE     *************************************
+public void SubmitData(){
+    //  CHECK VALID DATA FIRST BEFORE SUBMITTING INFO
+    // 1) ID must be exactly 11 digits
+    // 2) if all edit texts is not empty(length is not 0) means that the user wrote in it
+    // 3) use || 'OR' operator for radio buttons to make sure if one of them is checked
+    // 4) checking for non selected spinners if the first selection is selected 'default'
+    // 5) checking if the gpa is 4 digits but the 2nd position is a dot '.' not a number so it can be only 3 digits gpa
+    // 6) if the check box is checked but user wrote info in edit text
+    // 7) CITY CODE IS SELECTED AND NOT LEFT IN DEFAULT POSITION
+    if(stdId.getText().toString().length()==11 && stdFname.getText().length()!=0 && stdLname.getText().length()!=0&&
+            btnDate.getText().length()!=0 &&txtCity.getText().length()!=0 && (rdMale.isChecked() ||
+            rdFemale.isChecked()) &&  FacultySpinner.getSelectedItemPosition()!=0 && DeptSpinner.getSelectedItemPosition()!=0 &&
+            (stdGpa.getText().length()==4 && stdGpa.getText().charAt(1)=='.') && (rdFull.isChecked() || rdNone.isChecked() || rdHalf.isChecked())&&
+            ( (info.isChecked() && extraInfo.getText().length()!=0) || (!info.isChecked()))){
+        try {
+            db=SQLiteDatabase.openDatabase(path,null,SQLiteDatabase.CREATE_IF_NECESSARY);
+            //insert data
+            //get all inputs first
+            long id = Long.parseLong(stdId.getText().toString());
+            String FName = stdFname.getText().toString();
+            String Lname = stdLname.getText().toString();
+            String BirthD = btnDate.getText().toString();
+            String birthP = txtCity.getText().toString();
+            //set the hidden textview widget's text according to user's selection
+            if(rdMale.isChecked()){ resG.setText("male");}
+            if(rdFemale.isChecked()){ resG.setText("female");}
+            String Gend =resG.getText().toString();
+            String Fac = FacultySpinner.getSelectedItem().toString();
+            String Dep = DeptSpinner.getSelectedItem().toString();
+            float gpa = Float.parseFloat(stdGpa.getText().toString());
+            //set the hidden textview widget's text according to user's selection
+            if(rdFull.isChecked()){resscl1.setText("Full");}
+            if(rdHalf.isChecked()){resscl1.setText("Half");}
+            if(rdNone.isChecked()){resscl1.setText("None");}
+            String sclshp = resscl1.getText().toString();
+            String addinfo = extraInfo.getText().toString();
+            //insert the data in the table
+            String insert = "insert into student values("+id+",'"+FName+"','"+Lname+"','"+BirthD+"','"+birthP+"','"
+                    +Gend+"','"+Fac+"','"+Dep+"',"+gpa+",'"+sclshp+"','"+addinfo+"');";
+            db.execSQL(insert);
+            showCustomToast("data inserted");
+            db.close();
+            reset(); //reset inputs
+        }
+        catch(SQLException e){showCustomToast(e.getMessage());}}
+    //IF DATA IS NOT VALID DISPLAY TOAST MESSAGE TO ASK TO INPUT DATA CORRECTLY
+    else{showCustomToast("Invalid input Data\nplease try again");}
+}
+
+    //************************ DISPLAY ALL STUDENTS STORED IN THE DATABASE ****************************************************
+ public void DisplayData(){
          try {
              db= SQLiteDatabase.openDatabase(path,null,SQLiteDatabase.CREATE_IF_NECESSARY);
              String search = "select id,firstname,lastname,department from student";
@@ -388,47 +355,35 @@ public void SubmitData(){
                  String fname = cursor.getString(1);
                  String lname =cursor.getString(2);
                  String Dept = cursor.getString(3);
-
                  String result = id+" , "+fname+" , "+lname+" , "+Dept;
                  students.add(result);
              }
              listView.setAdapter(adapter);
              db.close();
          }
-
-         catch(SQLException e){
-             showCustomToast(e.getMessage());
-         }
+         catch(SQLException e){showCustomToast(e.getMessage());}
      }
 
-
-
-     private void DeleteStd(String id,Dialog customDialog){
-
-        try {
-             db= SQLiteDatabase.openDatabase(path,null,SQLiteDatabase.CREATE_IF_NECESSARY);
-             String query = "select * from student where id ="+id+";";
-             Cursor cursor = db.rawQuery(query,null);
+     //**************************** DELETE THE STUDENT RECORD FROM DATABASE **************************************
+     private void DeleteStd(String id,Dialog customDialog) {
+         try {
+             db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+             String query = "select * from student where id =" + id + ";";
+             Cursor cursor = db.rawQuery(query, null);
              // if such a query exist, meaning the student exists, delete the student
-            if(cursor.moveToFirst()){
-                String delete = "delete from student where id ="+id+";";
-                db.execSQL(delete);
-                showCustomToast("student deleted  successfully");
-                db.close();
-                customDialog.dismiss();
-            }
-            else{showCustomToast("student doesnt exist\ntry again");}
-
-         }
-
-         catch(SQLException e){
-            showCustomToast(e.getMessage());
-         }
-     }
-
+             if (cursor.moveToFirst()) {
+                 String delete = "delete from student where id =" + id + ";"; // execute the sql delete statment
+                 db.execSQL(delete);
+                 showCustomToast("student deleted  successfully");
+                 db.close();
+                 customDialog.dismiss(); //close the dialog
+             } else {showCustomToast("student doesnt exist\ntry again");}
+         } catch (SQLException e) {showCustomToast(e.getMessage());}}
+     //************************************ SEARCH THE DATABASE FOR THE ASKED STUDENT AND PRINT HIS INFO *****************************************
     private void SearchStd(String id , Dialog customDialog){
         try {
             db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+            //first lets check if the student exist by running a query and seeing if there is a result table
             String query = "select * from student where id =" + id + ";";
             Cursor c = db.rawQuery(query, null);
             // if such a query exist, meaning the student exists, print all his info
@@ -438,42 +393,34 @@ public void SubmitData(){
                 ArrayList<String> foundStd = new ArrayList<>();
                 ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, foundStd);
                 while (cursor.moveToNext()) {
-                    for (int i = 0; i < 11; i++) {
-                        foundStd.add(cursor.getString(i));
-                    }
-                }
+                    for (int i = 0; i < 11; i++) { foundStd.add(cursor.getString(i)); }}
+                //modify listview to hold the student info
                 listView.setAdapter(adapter1);
                 db.close();
                 showCustomToast("student found");
-                customDialog.dismiss();
-
-
+                customDialog.dismiss();//close the dialog box
             }
-            else{showCustomToast("student doesnt exist\ntry again");}
+            else{showCustomToast("student doesn't exist\ntry again");}
         }
-        catch(SQLException e){
-           showCustomToast(e.getMessage());
-        }
+        catch(SQLException e){showCustomToast(e.getMessage());}
     }
-
+//***********************************           UPDATE THE STUDENT INFO     *****************************************************
     private void UpdateStdInfo(String id,String fname,String lname,String fac,String dep){
         try{
             db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.CREATE_IF_NECESSARY);
             String update = "update student set firstname='"+fname+"',lastname='"+lname+"',faculty='"+fac+"',department='"+dep+"'"
             +"where id="+id+";";
             db.execSQL(update);
-                showCustomToast("Student Updated Successfully");
-
-
+            showCustomToast("Student Updated Successfully");
         }
-        catch(SQLException e){
-          showCustomToast(e.getMessage());
-        }
+        catch(SQLException e){showCustomToast(e.getMessage());}
     }
+    //**************************     END OF BUTTONS FUNCTION ******************************************************************
+
+
 //*****************************************************************************************
 //                               DATE PICKER SETUP
 // ****************************************************************************************
-
     private void initDatePicker(){
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener(){
             //get selected date and assign it to a string to set text the button
@@ -500,10 +447,10 @@ public void SubmitData(){
         datePickerDialog .getDatePicker().setMinDate(cal.getTimeInMillis());
     }//end of method
 
+//**************************************************************************************************************
 
     //********************* CUSTOM TOAST **********************************************88
     public void showCustomToast(String msg){
-        // /////////////////////////////////////////////////
 // this fragment creates a custom Toast showing
 //text + shaped_background
         // triggered by XML button's android:onClick=...
@@ -517,12 +464,15 @@ public void SubmitData(){
         text.setText(msg);
         Toast toast = new Toast(context);
         toast.setDuration(Toast.LENGTH_SHORT);
-
         toast.setView(layout);
-
         return toast;
     }//makeCustomToast
-//**********************************    DIALOGs ***************************************
+
+    //************************************  END OF CUSTOM TOAST SETUP *******************************************8
+
+
+//**********************************    DIALOG(s) ***************************************
+    // ****************** SHOW DIALOG BOX ONCE USER CLICKS ON DELETE BUTTON ***********************************8
 private void DeleteStdDialog() {
     final Dialog customDialog = new Dialog(activityContext);
     customDialog.setTitle("ID query");
@@ -532,17 +482,14 @@ private void DeleteStdDialog() {
     text.setText("Enter ID of student\n to delete");
     final EditText IdData = customDialog
             .findViewById(R.id.queryID);
-
+// if user with id exists and user click submit, call DeletStd() that deletes  the student \
     (customDialog.findViewById(R.id.btnIdDialog))
             .setOnClickListener(new View.OnClickListener() {
                 @Override
-                public void onClick(View v) {
-                DeleteStd(IdData.getText().toString(),customDialog);
-
-                }
-            });
+                public void onClick(View v) { DeleteStd(IdData.getText().toString(),customDialog);}});
     customDialog.show();
 }
+//*******************************     SHOW DIALOG BOX FOR ONCE THE USER CLICKS ON SEARCH BUTTON *******************************************
     private void SearchStdDialog() {
         final Dialog customDialog = new Dialog(activityContext);
         customDialog.setTitle("ID query");
@@ -552,18 +499,17 @@ private void DeleteStdDialog() {
         text.setText("Enter ID of student\n to search");
         final EditText IdData = customDialog
                 .findViewById(R.id.queryID);
-
+//calls SearchStd which prints all the student's info in a list view if exists
         (customDialog.findViewById(R.id.btnIdDialog))
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
-                    public void onClick(View v) {
-                       SearchStd(IdData.getText().toString(),customDialog);
-
-                    }
-                });
+                    public void onClick(View v){ SearchStd(IdData.getText().toString(),customDialog);}});
         customDialog.show();
     }
-    //******************************************        UPDATE STUDENT **************************************
+
+    //******************************************  UPDATE STUDENT SETUP **************************************
+    //****************************************** SHOW DIALOG BOX ONCE THE USER CLICKS ON UPDATE BUTTON **********************************
+    //first checks id by displaying a dialog box for id input
     private void UpdateStd() {
         final Dialog customDialog = new Dialog(activityContext);
         customDialog.setTitle("ID query");
@@ -578,91 +524,78 @@ private void DeleteStdDialog() {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         UpdateStdDialog(IdData.getText().toString());
                         customDialog.dismiss();
-
                     }
                 });
         customDialog.show();
     }
+    //*************************** if student exist, show a dialog box to input new firstname,lastname,faculty and department**********************************
     private void UpdateStdDialog(String id) {
         //first check if student exists
-        db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.CREATE_IF_NECESSARY);
-        String query = "select * from student where id=" + id + ";";
-        Cursor c = db.rawQuery(query, null);
-        if (c.moveToFirst()) {
-            final Dialog customDialog = new Dialog(activityContext);
-            customDialog.setTitle("Update Info");
+        try {
+            db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.CREATE_IF_NECESSARY);
+            String query = "select * from student where id=" + id + ";";
+            Cursor c = db.rawQuery(query, null);
+            if (c.moveToFirst()) {
+                final Dialog customDialog = new Dialog(activityContext);
+                customDialog.setTitle("Update Info");
 // match customDialog with custom dialog layout
-            customDialog.setContentView(R.layout.custom_update_dialog);
-            Window window = customDialog.getWindow();
-            window.setLayout(500,500);
-            TextView text = customDialog.findViewById(R.id.sd_textView1);
-            final EditText fname = customDialog.findViewById(R.id.Updatefirstname);
-            final EditText lname = customDialog.findViewById(R.id.Updatelastname);
-            final Spinner facs = customDialog.findViewById(R.id.UpFacultySpinner);
-            ArrayAdapter<String> facadapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, faculties);
-            final Spinner Deps = customDialog.findViewById(R.id.UpDeptSpinner);
-            ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, empty);
-            ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, EngDept);
-            ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ArchDept);
-            ArrayAdapter<String> adapter4 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, BussDept);
-            ArrayAdapter<String> adapter5 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, CommDept);
-            facs.setAdapter(facadapter);
-            facs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-                @Override
-                public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
-                    //default
-                    if (i == 0) {
-                        Deps.setAdapter(adapter1);
-                    }
-                    //if engineer faculty is selected, set ENG departments for the spinner
-                    else if (i == 1) {
-                        Deps.setAdapter(adapter2);
-                    }
-                    //if business faculty is selected, set BUS departments for the spinner
-                    else if (i == 2) {
-                        Deps.setAdapter(adapter3);
-                    }
-                    //if architecture faculty is selected, set ARCH departments for the spinner
-                    else if (i == 3) {
-                        Deps.setAdapter(adapter4);
-                    }
-                    //if Communication faculty is selected, set Comm departments for the spinner
-                    else if (i == 4) {
-                        Deps.setAdapter(adapter5);
-                    }
+                customDialog.setContentView(R.layout.custom_update_dialog);
+                Window window = customDialog.getWindow();
+                window.setLayout(500, 500); //set size of dialog box
 
-                }
-
-                @Override
-                public void onNothingSelected(AdapterView<?> adapterView) { /*required for the interface*/}
-            }); // end of setOnItemSelectedListener of faculty spinner
-
-
-            (customDialog.findViewById(R.id.btnUpdateDialog))
-                    .setOnClickListener(new View.OnClickListener() {
-                        @Override
-                        public void onClick(View v) {
-                            String Sfname = fname.getText().toString();
-                            String Slname = lname.getText().toString();
-                            String Sfac = facs.getSelectedItem().toString();
-                            String Sdep = Deps.getSelectedItem().toString();
-                            if(Sfname.isEmpty() || Sfac.isEmpty() || Sdep.equals("Select") || Sfac.equals("Select")){
-                                showCustomToast("incorrect submitted information\ntry again");
+                final EditText fname = customDialog.findViewById(R.id.Updatefirstname);
+                final EditText lname = customDialog.findViewById(R.id.Updatelastname);
+                final Spinner facs = customDialog.findViewById(R.id.UpFacultySpinner);
+                //**************************** SET THE SPINNER ADAPTER SAME AS BEFORE ****************************************
+                ArrayAdapter<String> facadapter = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, faculties);
+                final Spinner Deps = customDialog.findViewById(R.id.UpDeptSpinner);
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, empty);
+                ArrayAdapter<String> adapter2 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, EngDept);
+                ArrayAdapter<String> adapter3 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, BussDept);
+                ArrayAdapter<String> adapter4 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, ArchDept);
+                ArrayAdapter<String> adapter5 = new ArrayAdapter<>(this, android.R.layout.simple_list_item_1, CommDept);
+                facs.setAdapter(facadapter);
+                facs.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+                    @Override
+                    public void onItemSelected(AdapterView<?> adapterView, View view, int i, long l) {
+                        //default
+                        if (i == 0) {Deps.setAdapter(adapter1);}
+                        //if engineer faculty is selected, set ENG departments for the spinner
+                        else if (i == 1) {Deps.setAdapter(adapter2);}
+                        //if business faculty is selected, set BUS departments for the spinner
+                        else if (i == 2) {Deps.setAdapter(adapter3);}
+                        //if architecture faculty is selected, set ARCH departments for the spinner
+                        else if (i == 3) {Deps.setAdapter(adapter4);}
+                        //if Communication faculty is selected, set Comm departments for the spinner
+                        else if (i == 4) {Deps.setAdapter(adapter5);}}
+                    @Override
+                    public void onNothingSelected(AdapterView<?> adapterView) { /*required for the interface*/}
+                }); // end of setOnItemSelectedListener of faculty spinner
+                (customDialog.findViewById(R.id.btnUpdateDialog))
+                        .setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                String Sfname = fname.getText().toString();
+                                String Slname = lname.getText().toString();
+                                String Sfac = facs.getSelectedItem().toString();
+                                String Sdep = Deps.getSelectedItem().toString();
+                                //if user inputs correctly update the student info by calling UpdateStdInfo() method that handles SQL statements
+                                if (Sfname.isEmpty() || Sfac.isEmpty() || Sdep.equals("Select") || Sfac.equals("Select")) {
+                                    showCustomToast("incorrect submitted information\ntry again");
+                                } else {
+                                    UpdateStdInfo(id, Sfname, Slname, Sfac, Sdep);
+                                    customDialog.dismiss();//close the dialog
+                                }
                             }
-                            else{
-                            UpdateStdInfo(id,Sfname, Slname, Sfac, Sdep);
-                            customDialog.dismiss();
-                        }}
-                    });
-            customDialog.show();
-         db.close();
+                        });
+                customDialog.show();
+                db.close();
+            } else {showCustomToast("student doesnt exist\n try again");}
         }
-        else{showCustomToast("student doesnt exist\n try again");}
-
+        catch(SQLException e){showCustomToast(e.getMessage());}
     }
-
+//************************************************* END OF UPDATE STUDENT SETUP ********************************************************************8
 
 }//end of class

@@ -349,7 +349,7 @@ public void SubmitData(){
              String search = "select id,firstname,lastname,department from student";
              Cursor cursor = db.rawQuery(search,null);
              ArrayList<String> students =new ArrayList<>();
-             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item,students);
+             ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom,students);
              while(cursor.moveToNext()){
                  String  id = cursor.getString(0);
                  String fname = cursor.getString(1);
@@ -391,7 +391,7 @@ public void SubmitData(){
                 String select = "select * from student where id =" + id + ";";
                 Cursor cursor = db.rawQuery(select, null);
                 ArrayList<String> foundStd = new ArrayList<>();
-                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, android.R.layout.simple_spinner_dropdown_item, foundStd);
+                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom, foundStd);
                 while (cursor.moveToNext()) {
                     for (int i = 0; i < 11; i++) { foundStd.add(cursor.getString(i)); }}
                 //modify listview to hold the student info

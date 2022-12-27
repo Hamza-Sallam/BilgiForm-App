@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.Intent;
 import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
@@ -240,7 +241,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         // if user checked it but changed his mind and unchecked it, make it invisible again and reset the text
         else if(!info.isChecked()){
-            extraInfo.setVisibility(View.INVISIBLE);
+            extraInfo.setVisibility(View.GONE);
             extraInfo.setText("");
         }
     }//end of OnClick
@@ -290,7 +291,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         DeptSpinner.setSelection(0);
         extraInfo.setText("");
         info.setChecked(false);
-        extraInfo.setVisibility(View.INVISIBLE);
+        extraInfo.setVisibility(View.GONE);
+        listView.setVisibility(View.GONE);
+        showCustomToast("Data Reset");
     }// end of reset
     //************************************      SUBMIT STUDENT INFO TO DATABASE     *************************************
 public void SubmitData(){
@@ -345,6 +348,7 @@ public void SubmitData(){
     //************************ DISPLAY ALL STUDENTS STORED IN THE DATABASE ****************************************************
  public void DisplayData(){
          try {
+             listView.setVisibility(View.VISIBLE);
              db= SQLiteDatabase.openDatabase(path,null,SQLiteDatabase.CREATE_IF_NECESSARY);
              String search = "select id,firstname,lastname,department from student";
              Cursor cursor = db.rawQuery(search,null);
@@ -377,11 +381,13 @@ public void SubmitData(){
                  showCustomToast("student deleted  successfully");
                  db.close();
                  customDialog.dismiss(); //close the dialog
-             } else {showCustomToast("student doesnt exist\ntry again");}
+                 reset();
+             } else {showCustomToast("student doesn't exist\ntry again"); reset();}
          } catch (SQLException e) {showCustomToast(e.getMessage());}}
      //************************************ SEARCH THE DATABASE FOR THE ASKED STUDENT AND PRINT HIS INFO *****************************************
     private void SearchStd(String id , Dialog customDialog){
         try {
+
             db = SQLiteDatabase.openDatabase(path, null, SQLiteDatabase.CREATE_IF_NECESSARY);
             //first lets check if the student exist by running a query and seeing if there is a result table
             String query = "select * from student where id =" + id + ";";
@@ -390,17 +396,44 @@ public void SubmitData(){
             if (c.moveToFirst()) {
                 String select = "select * from student where id =" + id + ";";
                 Cursor cursor = db.rawQuery(select, null);
-                ArrayList<String> foundStd = new ArrayList<>();
-                ArrayAdapter<String> adapter1 = new ArrayAdapter<>(this, R.layout.custom, foundStd);
+                // declare the variables that will be fetched from the database
+                String stdId="",fname="",lname="",bdate="",bplace="",gender="",fac="",dep="",scl="",gpa="",info="";
                 while (cursor.moveToNext()) {
-                    for (int i = 0; i < 11; i++) { foundStd.add(cursor.getString(i)); }}
-                //modify listview to hold the student info
-                listView.setAdapter(adapter1);
+                    stdId =cursor.getString(0);
+                    fname = cursor.getString(1);
+                    lname = cursor.getString(2);
+                    bdate = cursor.getString(3);
+                    bplace = cursor.getString(4);
+                    gender = cursor.getString(5);
+                    fac = cursor.getString(6);
+                    dep = cursor.getString(7);
+                    gpa = cursor.getString(8);
+                    scl = cursor.getString(9);
+                    info = cursor.getString(10);
+                }
+                //an intent to hold an activity that shows all student Info
+                Intent myIntent = new Intent(MainActivity.this,studentInfo.class);
+                Bundle myBundle = new Bundle(); // cretete  a bundle
+                //put all student info to the bundle
+                myBundle.putString("id",stdId);
+                myBundle.putString("fname",fname);
+                myBundle.putString("lname",lname);
+                myBundle.putString("bdate",bdate);
+                myBundle.putString("bcity",bplace);
+                myBundle.putString("gender",gender);
+                myBundle.putString("faculty",fac);
+                myBundle.putString("department",dep);
+                myBundle.putString("gpa",gpa);
+                myBundle.putString("scholarShip",scl);
+                myBundle.putString("extInfo",info);
+                myIntent.putExtras(myBundle);
+                startActivity(myIntent);// open the activity to show student info
                 db.close();
                 showCustomToast("student found");
+                reset();
                 customDialog.dismiss();//close the dialog box
             }
-            else{showCustomToast("student doesn't exist\ntry again");}
+            else{showCustomToast("student doesn't exist\ntry again");reset();}
         }
         catch(SQLException e){showCustomToast(e.getMessage());}
     }
@@ -412,7 +445,9 @@ public void SubmitData(){
             +"where id="+id+";";
             db.execSQL(update);
             showCustomToast("Student Updated Successfully");
+            reset();
         }
+
         catch(SQLException e){showCustomToast(e.getMessage());}
     }
     //**************************     END OF BUTTONS FUNCTION ******************************************************************

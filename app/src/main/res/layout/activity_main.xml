@@ -2,7 +2,7 @@
 <LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
-    android:background="@drawable/red"
+    android:background="#D33C3C"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
@@ -459,7 +459,7 @@
                 android:textColor="#fff"
                 android:text="@string/extraInfo"
                 android:textColorHint="#D5C4C4"
-                android:visibility="invisible" />
+                android:visibility="gone" />
 
 
 <!--     Hline -->
@@ -468,103 +468,111 @@
                 android:layout_height="4dp"
                 android:background="#23040F" />
 <!--            list view to hold records-->
-            <ListView
-                android:id="@+id/listView"
-                android:layout_width="match_parent"
-                android:layout_height="779dp" />
             <!--*******************************************************************************************
                                       BUTTONS SECTION
     *******************************************************************************************-->
 <!--        HORIZNTAL LAYOUT-->
 
+            <ListView
+                android:id="@+id/listView"
+                android:layout_width="match_parent"
+                android:layout_height="298dp"
+                android:visibility="gone" />
+
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-<!--                reset button-->
-                <Button
-                    android:id="@+id/btnReset"
-                    android:layout_width="136dp"
-                    android:padding="15dp"
+                android:layout_height="208dp"
+                android:gravity="center_horizontal"
+                android:orientation="horizontal">
+
+                <!--        HORIZNTAL LAYOUT-->
+                <LinearLayout
+                    android:layout_width="203dp"
+                    android:layout_height="270dp"
+                    android:orientation="vertical"
+
+                    android:padding="10dp">
+                    <!--                submit button    -->
+                    <Button
+                        android:id="@+id/btnSubmit"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#1ADC21"
+                        android:padding="15dp"
+                        android:text="@string/btnSbmt"
+                        android:textSize="15sp" />
+
+                    <!--                update button-->
+                    <Button
+                        android:id="@+id/btnUpdate"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:backgroundTint="#2196F3"
+                        android:padding="15dp"
+                        android:text="Update"
+                        android:textSize="15sp" />
+                    <!--                delete button-->
+                    <Button
+                        android:id="@+id/btnDelete"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="2dp"
+                        android:backgroundTint="#009688"
+                        android:padding="15dp"
+                        android:text="Delete"
+                        android:textSize="15sp" />
+
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="210dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5sp"
-                    android:backgroundTint="#FFEB3B"
-                    android:text="@string/btnRst"
-                    android:textSize="15sp"
-                    android:textColor="#000000" />
-<!--                submit button    -->
-                <Button
-                    android:id="@+id/btnSubmit"
-                    android:layout_width="106dp"
-                    android:padding="15dp"
-                    android:textSize="15sp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5sp"
-                    android:backgroundTint="#4CAF50"
-                    android:text="@string/btnSbmt" />
-<!--                exit button-->
-                <Button
-                    android:id="@+id/btnExit"
-                    android:layout_width="171dp"
-                    android:textSize="15sp"
-                    android:padding="15dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#FF3D00"
-                    android:text="@string/btnExt" />
+                    android:orientation="vertical"
+
+                    android:padding="10dp">
+                    <!--                display button-->
+                    <Button
+                        android:id="@+id/btnDisplay"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#FF9800"
+                        android:padding="15dp"
+                        android:text="Display"
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+                    <!--                search button    -->
+                    <Button
+                        android:id="@+id/btnSearch"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#673AB7"
+                        android:padding="15dp"
+                        android:text="Search"
+                        android:textSize="15sp" />
+                    <!--                reset button-->
+
+                    <Button
+                        android:id="@+id/btnReset"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:backgroundTint="#FFEB3B"
+                        android:padding="15dp"
+                        android:text="@string/btnRst"
+                        android:textColor="#000000"
+                        android:textSize="15sp" />
+
+
+                </LinearLayout>
             </LinearLayout>
-            <!--        HORIZNTAL LAYOUT-->
-            <LinearLayout
+            <Button
+                android:id="@+id/btnExit"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp">
-                <!--                reset button-->
-                <Button
-                    android:id="@+id/btnDisplay"
-                    android:layout_width="wrap_content"
-                    android:padding="15dp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginRight="5sp"
-                    android:backgroundTint="#FF9800"
-                    android:text="Display"
-                    android:textSize="15sp"
-                    android:textColor="#000000" />
-                <!--                submit button    -->
-                <Button
-                    android:id="@+id/btnSearch"
-                    android:layout_width="wrap_content"
-                    android:padding="15dp"
-                    android:textSize="15sp"
-                    android:layout_height="wrap_content"
-                    android:layout_marginRight="5sp"
-                    android:backgroundTint="#673AB7"
-                    android:text="Search" />
-                <!--                exit button-->
-                <Button
-                    android:id="@+id/btnUpdate"
-                    android:layout_width="wrap_content"
-                    android:textSize="15sp"
-                    android:padding="15dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#2196F3"
-                    android:text="Update" />
-                <Button
-                    android:id="@+id/btnDelete"
-                    android:layout_width="wrap_content"
-                    android:textSize="15sp"
-                    android:padding="15dp"
-                    android:layout_marginLeft="2dp"
-                    android:layout_height="wrap_content"
-                    android:backgroundTint="#009688"
-                    android:text="Delete" />
-            </LinearLayout>
-
-
+                android:backgroundTint="#FF3D00"
+                android:padding="15dp"
+                android:text="@string/btnExt"
+                android:textSize="15sp" />
         </LinearLayout>
     </ScrollView>
 </LinearLayout>

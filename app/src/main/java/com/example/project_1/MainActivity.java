@@ -174,7 +174,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         catch(SQLException e){showCustomToast(e.getMessage());}
     }//end of OnCreate
 
-
+    //helper method to check if database exists
+    private boolean databaseExist(){
+        File dbFile = new File(path);
+        return dbFile.exists();
+    }
     //******************************************************* OPTION MENU SETUP *************************************************************
     // set the option menu for the current activity
     @Override
@@ -207,13 +211,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if(menuItemId == 5 ){DeleteStdDialog();}
         else if(menuItemId == 6 ){reset();}
         else if(menuItemId== 7){System.exit(0); finish();}
+        else if(menuItemId ==8){help();}
+
         return false;
     }
-    //helper method to check if database exists
-    private boolean databaseExist(){
-        File dbFile = new File(path);
-        return dbFile.exists();
-    }
+public void help(){
+        showCustomToast("call 99933333\n\tfor help");
+}
 //    **************************************    END OF OPTION MENU SETUP *******************************************************
 
 
@@ -397,7 +401,7 @@ public void SubmitData(){
                 String select = "select * from student where id =" + id + ";";
                 Cursor cursor = db.rawQuery(select, null);
                 // declare the variables that will be fetched from the database
-                String stdId="",fname="",lname="",bdate="",bplace="",gender="",fac="",dep="",scl="",gpa="",info="";
+                String stdId="",fname="",lname="",bdate="",bplace="",gender="",fac="",dep="",gpa="",scl="",info="";
                 while (cursor.moveToNext()) {
                     stdId =cursor.getString(0);
                     fname = cursor.getString(1);

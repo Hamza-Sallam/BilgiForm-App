@@ -10,6 +10,8 @@ import android.database.Cursor;
 import android.database.SQLException;
 import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
+import android.text.InputFilter;
+import android.text.Spanned;
 import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -86,6 +88,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDelete = findViewById(R.id.btnDelete);
         extraInfo= findViewById(R.id.extInfo);
         stdGpa = findViewById(R.id.gpa);
+
+        //limits decimal palaces for Gpa
+        InputFilter filter = new InputFilter() {
+            final int maxDigitsBeforeDecimalPoint=1;
+            final int maxDigitsAfterDecimalPoint=2;
+            final double min=0.0;
+            final double max=4.0;
+
+            @Override
+            public CharSequence filter(CharSequence source, int start, int end,
+                                       Spanned dest, int dstart, int dend) {
+
+                Double input = 0.0;
+                try {
+                    input = Double.parseDouble(dest.subSequence(0, dstart).toString() + source + dest.subSequence(dend, dest.length()));
+                } catch (NumberFormatException nfe) { }
+
+                if (!isInRange(min, max, input))
+                    return "";
+
+                StringBuilder builder = new StringBuilder(dest);
+                builder.replace(dstart, dend, source.subSequence(start, end).toString());
+                if (!builder.toString().matches(
+                        "(([1-9]{1})([0-9]{0,"+(maxDigitsBeforeDecimalPoint-1)+"})?)?(\\.[0-9]{0,"+maxDigitsAfterDecimalPoint+"})?"
+                )) {
+                    if(source.length() == 0)
+                        return dest.subSequence(dstart, dend);
+                    return "";
+                }
+
+                return null;
+            }
+        };
+        stdGpa.setFilters(new InputFilter[] { filter });
+
+
         BirthSpinner = findViewById(R.id.BirthSpinner);
         txtCity=findViewById(R.id.TxtBirthCity);
         FacultySpinner= findViewById(R.id.FacultySpinner);
@@ -173,6 +211,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         catch(SQLException e){showCustomToast(e.getMessage());}
     }//end of OnCreate
+
+    //helper method to check range of gpa
+    private boolean isInRange(double a, double b, double c) {
+        return b > a ? c >= a && c <= b : c >= b && c <= a;
+    }
 
     //helper method to check if database exists
     private boolean databaseExist(){

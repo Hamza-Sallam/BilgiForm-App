@@ -88,6 +88,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnDelete = findViewById(R.id.btnDelete);
         extraInfo= findViewById(R.id.extInfo);
         stdGpa = findViewById(R.id.gpa);
+        BirthSpinner = findViewById(R.id.BirthSpinner);
+        txtCity=findViewById(R.id.TxtBirthCity);
+        FacultySpinner= findViewById(R.id.FacultySpinner);
+        DeptSpinner= findViewById(R.id.DeptSpinner);
+        info=findViewById(R.id.info);
+        initDatePicker();// call the date picker method that prints the date after user select a date from the date picker dialog
 
         //limits decimal palaces for Gpa
         InputFilter filter = new InputFilter() {
@@ -124,12 +130,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         stdGpa.setFilters(new InputFilter[] { filter });
 
 
-        BirthSpinner = findViewById(R.id.BirthSpinner);
-        txtCity=findViewById(R.id.TxtBirthCity);
-        FacultySpinner= findViewById(R.id.FacultySpinner);
-        DeptSpinner= findViewById(R.id.DeptSpinner);
-        info=findViewById(R.id.info);
-        initDatePicker();// call the date picker method that prints the date after user select a date from the date picker dialog
 
         // ******   DEFINE ADAPTERS   **********
         //use my custom spinner style to make text white and background red
@@ -504,29 +504,34 @@ public void SubmitData(){
 //                               DATE PICKER SETUP
 // ****************************************************************************************
     private void initDatePicker(){
+        //calender of current time zone
+        Calendar cal = Calendar.getInstance();
+        //set year,month and day
+        int currentYear = cal.get(Calendar.YEAR);
+        int currentMonth = cal.get(Calendar.MONTH);
+        int currentDay = cal.get(Calendar.DAY_OF_MONTH);
+
         DatePickerDialog.OnDateSetListener dateSetListener = new DatePickerDialog.OnDateSetListener(){
             //get selected date and assign it to a string to set text the button
             @Override
             public void onDateSet(DatePicker datePicker, int year, int month, int day){
                 month++;
-                String date = year + "-" + month+ "-" + day;
-                btnDate.setText(date);
+                //if the user chose  future date, show toast message and reset the date value
+                if (year > currentYear || (year == currentYear && month > currentMonth+1) || (year == currentYear && month == currentMonth+1 && day > currentDay)) {
+                    showCustomToast("you selected future date\nyou cant be born on "+day+"/"+month+"/"+year+" :)\n try again");
+                    btnDate.setText("");
+                } else {
+                    // User has selected a past or current date
+                    //date format as yyyy-mm-dd for SQL acceptance
+                    String date = year + "-" + month+ "-" + day;
+                    btnDate.setText(date);
+                }
             }
         };//end of OnDateSetListener
 
-        //calender of current time zone
-        Calendar cal = Calendar.getInstance();
-        //set year,month and day
-        int year = cal.get(Calendar.YEAR);
-        int month = cal.get(Calendar.MONTH);
-        int day = cal.get(Calendar.DAY_OF_MONTH);
-        int style = AlertDialog.BUTTON_NEUTRAL;
         // create  the date picker
-        datePickerDialog  = new DatePickerDialog(this, style, dateSetListener, year, month, day);
-        cal.set(2010,11,30);// set maximum birth year for a student is 2006 for a student "16 years"
-        datePickerDialog .getDatePicker().setMaxDate(cal.getTimeInMillis());
-        cal.set(1960,0,1); //minimum birth year a student can be is 1960 "82 years :)"
-        datePickerDialog .getDatePicker().setMinDate(cal.getTimeInMillis());
+        int style = AlertDialog.BUTTON_NEUTRAL;
+        datePickerDialog  = new DatePickerDialog(this, style, dateSetListener, currentYear, currentMonth, currentDay);
     }//end of method
 
 //**************************************************************************************************************
